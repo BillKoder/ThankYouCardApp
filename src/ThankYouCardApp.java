@@ -22,10 +22,16 @@ public class ThankYouCardApp {
     private JButton button;
     private JLabel label;
     private JTextField textField;
+    int numberOfGifters;
 
     public static void main(String[] args) {
 
-        new ThankYouCardApp();
+        SwingUtilities.invokeLater((new Runnable() {
+            @Override
+            public void run() {
+                new ThankYouCardApp();
+            }
+        }));
     }
 
     private ThankYouCardApp() {
@@ -47,14 +53,18 @@ public class ThankYouCardApp {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                takeInNumberOfGifters(textField.getColumns());
+                numberOfGifters = Integer.parseInt(textField.getText());
+                panel.removeAll();
+                enterNameAndGift(numberOfGifters);
+                frame.revalidate();
+                frame.repaint();
+                takeInNumberOfGifters(numberOfGifters);
             }
         });
 
         panel.add(label);
         panel.add(textField);
         panel.add(button);
-
 
         frame.add(panel);
     }
@@ -97,4 +107,32 @@ public class ThankYouCardApp {
         }
 
     }
+
+    private void enterNameAndGift(int numberOfGifters){
+        frame.remove(panel);
+        JPanel panelB = new JPanel();
+        Color lightBlue = new Color(86,156,255);
+        panelB.setBackground(lightBlue);
+
+        JLabel labelName = new JLabel("Enter a Name:");
+        JLabel labelGift = new JLabel("Enter gift: ");
+        panelB.add(labelName);
+        panelB.add((labelGift));
+
+        JTextField[] textFieldNames = new JTextField[numberOfGifters];
+        JTextField[] textFieldGifts = new JTextField[numberOfGifters];
+        for (int i = 0; i < numberOfGifters; i++){
+            textFieldNames[i] = new JTextField("name", 20);
+            textFieldGifts[i] = new JTextField("gift", 20);
+            panelB.add(textFieldNames[i]);
+            panelB.add(textFieldGifts[i]);
+
+        }
+
+
+
+
+        frame.add(panelB);
+    }
+
 }
