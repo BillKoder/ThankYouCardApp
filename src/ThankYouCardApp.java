@@ -22,7 +22,9 @@ public class ThankYouCardApp {
     private JButton button;
     private JLabel label;
     private JTextField textField;
-    int numberOfGifters;
+    private int numberOfGifters;
+    String[] names;
+    String[] gifts;
 
     public static void main(String[] args) {
 
@@ -58,7 +60,7 @@ public class ThankYouCardApp {
                 enterNameAndGift(numberOfGifters);
                 frame.revalidate();
                 frame.repaint();
-                takeInNumberOfGifters(numberOfGifters);
+               // takeInNumberOfGifters(numberOfGifters);
             }
         });
 
@@ -109,6 +111,11 @@ public class ThankYouCardApp {
     }
 
     private void enterNameAndGift(int numberOfGifters){
+
+        JTextField[] textFieldNames = new JTextField[numberOfGifters];
+        JTextField[] textFieldGifts = new JTextField[numberOfGifters];
+        String[] names = new String[numberOfGifters];
+        String[] gifts = new String[numberOfGifters];
         frame.remove(panel);
         JPanel panelB = new JPanel();
         Color lightBlue = new Color(86,156,255);
@@ -116,11 +123,24 @@ public class ThankYouCardApp {
 
         JLabel labelName = new JLabel("Enter a Name:");
         JLabel labelGift = new JLabel("Enter gift: ");
-        panelB.add(labelName);
-        panelB.add((labelGift));
+        JButton SubmitButton = new JButton("Submit");
+        SubmitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < numberOfGifters; i++){
+                    names[i] = textFieldNames[i].getText();
+                    gifts[i] = textFieldGifts[i].getText();
+                }
+                panelB.removeAll();
+                thankYouMessage(numberOfGifters, names, gifts, panelB);
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
 
-        JTextField[] textFieldNames = new JTextField[numberOfGifters];
-        JTextField[] textFieldGifts = new JTextField[numberOfGifters];
+        panelB.add(labelName);
+        panelB.add(labelGift);
+
         for (int i = 0; i < numberOfGifters; i++){
             textFieldNames[i] = new JTextField("name", 20);
             textFieldGifts[i] = new JTextField("gift", 20);
@@ -129,10 +149,16 @@ public class ThankYouCardApp {
 
         }
 
-
-
-
+        panelB.add(SubmitButton);
         frame.add(panelB);
     }
 
+    private void thankYouMessage(int numberOfGifters, String[] names, String[] gifts, JPanel panel1) {
+        JLabel[] thankYous = new JLabel[numberOfGifters];
+
+        for (int i = 0; i < numberOfGifters; i++){
+            thankYous[i] = new JLabel("Thank you " + names[i] + " for " + gifts[i]);
+            panel1.add(thankYous[i]);
+        }
+    }
 }
