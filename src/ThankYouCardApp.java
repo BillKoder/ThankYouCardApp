@@ -1,13 +1,15 @@
-// Next I want to create a UI for the user to enter the information
-// Allow the program to read the information from a spreadsheet
-// Add a card design to print
-// Add e-mail functionality to be able to send cards through web
-// Make this app available on the web
-// Make this into an app for phones and tablets
-    // when being used by tablet allow for user to write input with stylist
+/*
+Next I want to create a UI for the user to enter the information
+Allow the program to read the information from a spreadsheet
+Add a card design to print
+Add e-mail functionality to be able to send cards through web
+Make this app available on the web
+Make this into an app for phones and tablets
+when being used by tablet allow for user to write input with stylist
+Scanner is used to take user input
+*/
 
 
-// Scanner is used to take user input
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
@@ -163,6 +165,17 @@ public class ThankYouCardApp {
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
         for (int i = 0; i < numberOfGifters; i++){
+            // Formatting gift strings
+            if (gifts[i].contains("a ") || gifts[i].contains("A ")) {
+                gifts[i] = gifts[i].replaceAll("a ", "the ");
+                gifts[i] = gifts[i].replaceAll("A ", "the ");
+            }
+            if (gifts[i].startsWith("The ")){
+                gifts[i] = gifts[i].replace("The ", "the ");
+            }
+            if (!gifts[i].startsWith("the ")){
+                gifts[i] = "the " + gifts[i];
+            }
             thankYouPanels[i] = new JPanel();
             thankYous[i] = new JLabel("Thank you " + names[i] + " for " + gifts[i]);
             panel2.add(thankYous[i]);
