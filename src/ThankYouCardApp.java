@@ -23,9 +23,7 @@ public class ThankYouCardApp {
     private JLabel label;
     private JTextField textField;
     private int numberOfGifters;
-    String[] names;
-    String[] gifts;
-
+    
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater((new Runnable() {
@@ -118,11 +116,13 @@ public class ThankYouCardApp {
         String[] gifts = new String[numberOfGifters];
         frame.remove(panel);
         JPanel panelB = new JPanel();
+        JPanel panelLabels = new JPanel();
+        JPanel[] panelTextFields = new JPanel[numberOfGifters];
+        JPanel[] horizontalTextPanels = new JPanel[numberOfGifters];
         Color lightBlue = new Color(86,156,255);
         panelB.setBackground(lightBlue);
 
-        JLabel labelName = new JLabel("Enter a Name:");
-        JLabel labelGift = new JLabel("Enter gift: ");
+        JLabel labelNameAndGift = new JLabel("Enter Name and Gift:");
         JButton SubmitButton = new JButton("Submit");
         SubmitButton.addActionListener(new ActionListener() {
             @Override
@@ -138,14 +138,17 @@ public class ThankYouCardApp {
             }
         });
 
-        panelB.add(labelName);
-        panelB.add(labelGift);
+       // panelLabels.add(labelNameAndGift);
+        panelB.add(labelNameAndGift, BorderLayout.NORTH);
+        // panelB.add(panelTextFields, BorderLayout.CENTER);
 
         for (int i = 0; i < numberOfGifters; i++){
             textFieldNames[i] = new JTextField("name", 20);
             textFieldGifts[i] = new JTextField("gift", 20);
-            panelB.add(textFieldNames[i]);
-            panelB.add(textFieldGifts[i]);
+            panelTextFields[i] = new JPanel();
+            panelTextFields[i].add(textFieldNames[i]);
+            panelTextFields[i].add(textFieldGifts[i]);
+            panelB.add(panelTextFields[i]);
 
         }
 
@@ -155,10 +158,15 @@ public class ThankYouCardApp {
 
     private void thankYouMessage(int numberOfGifters, String[] names, String[] gifts, JPanel panel1) {
         JLabel[] thankYous = new JLabel[numberOfGifters];
+        JPanel[] thankYouPanels = new JPanel[numberOfGifters];
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
         for (int i = 0; i < numberOfGifters; i++){
+            thankYouPanels[i] = new JPanel();
             thankYous[i] = new JLabel("Thank you " + names[i] + " for " + gifts[i]);
-            panel1.add(thankYous[i]);
+            panel2.add(thankYous[i]);
         }
+        panel1.add(panel2);
     }
 }
